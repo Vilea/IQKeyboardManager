@@ -1,3 +1,6 @@
+This fork is to fix an issue arising from iOS 8 where the library's `setFrame` method conflicts with auto layout (when using auto layout, of course), resulting in text fields being sometimes covered by the keyboard, in particular when the view controller is presented modally. The "fix" is currently to have the `setFrame` call executed after the auto layout computations. This is a hack which might - and probably will - break with an iOS update. 
+
+
 IQKeyboardManager
 ==========================
 
