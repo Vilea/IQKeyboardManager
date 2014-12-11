@@ -350,7 +350,7 @@ NSInteger const kIQPreviousNextButtonToolbarTag     =   -1005;
     // Note that this is a dirty hack for a problem arising starting from iOS 8.
     dispatch_after(DISPATCH_TIME_NOW, dispatch_get_main_queue(), ^{
         //Used UIViewAnimationOptionBeginFromCurrentState to minimize strange animations.
-        [UIView animateWithDuration:animationDuration delay:0 options:(animationCurve|UIViewAnimationOptionBeginFromCurrentState) animations:^{
+        [UIView animateWithDuration:_animationDuration delay:0 options:(_animationCurve|UIViewAnimationOptionBeginFromCurrentState) animations:^{
             //  Setting it's new frame
             [controller.view setFrame:frame];
         } completion:NULL];
