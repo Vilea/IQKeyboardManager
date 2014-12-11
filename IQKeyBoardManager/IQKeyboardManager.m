@@ -344,11 +344,17 @@ NSInteger const kIQPreviousNextButtonToolbarTag     =   -1005;
     //  If can't get rootViewController then printing warning to user.
     if (controller == nil)  NSLog(@"IQKeyboardManager: %@",IQLocalizedString(@"You must set UIWindow.rootViewController in your AppDelegate to work with IQKeyboardManager", nil));
     
-    //Used UIViewAnimationOptionBeginFromCurrentState to minimize strange animations.
-    [UIView animateWithDuration:_animationDuration delay:0 options:(_animationCurve|UIViewAnimationOptionBeginFromCurrentState) animations:^{
-        //  Setting it's new frame
-        [controller.view setFrame:frame];
-    } completion:NULL];
+
+    // Schedule after the current run loop, in order to let the system do his auto layout
+    // computations and then override them with setFrame:
+    // Note that this is a dirty hack for a problem arising starting from iOS 8.
+    dispatch_after(DISPATCH_TIME_NOW, dispatch_get_main_queue(), ^{
+        //Used UIViewAnimationOptionBeginFromCurrentState to minimize strange animations.
+        [UIView animateWithDuration:animationDuration delay:0 options:(animationCurve|UIViewAnimationOptionBeginFromCurrentState) animations:^{
+            //  Setting it's new frame
+            [controller.view setFrame:frame];
+        } completion:NULL];
+    });
 }
 
 /* Adjusting RootViewController's frame according to device orientation. */
